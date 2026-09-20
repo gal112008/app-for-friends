@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: goon-tracker
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npx prisma migrate deploy && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 30d
+      # Paste your Neon connection string here after creating the database.
+      - key: DATABASE_URL
+        sync: false
+      # Optional: fill in once you create a free Google OAuth client (see DEPLOY.md).
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      # Optional: only needed if you set up Sign in with Apple later.
+      - key: APPLE_CLIENT_ID
+        sync: false
+      - key: APPLE_REDIRECT_URI
+        sync: false

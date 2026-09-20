@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Goon Tracker</title>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div><p class="eyebrow">BASKETBALL COURT</p><h1>Goon Tracker</h1></div>
+      <button id="logoutBtn" class="ghost hidden">Log out</button>
+    </header>
+
+    <section id="authView" class="card auth-card">
+      <h2>Track your court visits.</h2>
+      <p class="muted">A simple iPhone-friendly tracker. No React, no native app required.</p>
+      <div id="googleButton" class="oauth-slot"></div>
+      <button id="appleBtn" class="oauth apple">Continue with Apple</button>
+      <p id="authStatus" class="status"></p>
+    </section>
+
+    <section id="appView" class="hidden">
+      <section class="hero card">
+        <div><p class="eyebrow">TODAY</p><h2 id="hello">Ready?</h2></div>
+        <button id="goonBtn" class="goon-button">GOON</button>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat card"><span>Current streak</span><strong id="currentStreak">—</strong><small>days</small></article>
+        <article class="stat card"><span>Best streak</span><strong id="maxStreak">—</strong><small>days</small></article>
+        <article class="stat card"><span>Total visits</span><strong id="totalGoons">—</strong><small>all time</small></article>
+        <article class="stat card"><span>Daily average</span><strong id="avgPerDay">—</strong><small>visits/day</small></article>
+      </section>
+
+      <section class="card section-card">
+        <div class="section-head"><div><p class="eyebrow">FRIENDS</p><h2>Your groups</h2></div><button id="refreshBtn" class="ghost">Refresh</button></div>
+        <div class="group-actions"><input id="groupName" maxlength="60" placeholder="New group name"><button id="createGroupBtn">Create</button></div>
+        <div class="group-actions"><input id="inviteCode" placeholder="Invite code"><button id="joinGroupBtn">Join</button></div>
+        <div id="groups" class="list empty">No groups yet.</div>
+      </section>
+
+      <section class="card section-card">
+        <div class="section-head"><div><p class="eyebrow">GLOBAL</p><h2>Leaderboard</h2></div></div>
+        <div id="leaderboard" class="list empty">No leaderboard data yet.</div>
+      </section>
+
+      <p id="appStatus" class="status"></p>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

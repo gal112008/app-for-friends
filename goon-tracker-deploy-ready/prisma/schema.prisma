@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  googleId    String?  @unique
+  appleId     String?  @unique
+  email       String?  @unique
+  displayName String
+  createdAt   DateTime @default(now())
+
+  memberships GroupMember[]
+  goons       Goon[]
+  ownedGroups Group[]       @relation("GroupOwner")
+
+  @@map("users")
+}
+
+model Group {
+  id         String   @id @default(uuid())
+  name       String
+  inviteCode String   @unique @default(cuid())
+  ownerId    String
+  owner      User     @relation("GroupOwner", fields: [ownerId], references: [id])
+  createdAt  DateTime @default(now())
+
+  members GroupMember[]
+
+  @@map("groups")
+}
+
+model GroupMember {
+  groupId  String
+  userId   String
+  joinedAt DateTime @default(now())
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([groupId, userId])
+  @@map("group_members")
+}
+
+// One row per visit to the basketball court (a "goon").
+model Goon {
+  id       String   @id @default(uuid())
+  userId   String
+  goonedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, goonedAt])
+  @@map("goons")
+}
